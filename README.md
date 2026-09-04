@@ -146,8 +146,4 @@ python run2_rlaif.py      # → zhuangzi-rlaif.pth
 
 `Python · PyTorch · transformers · uer/gpt2-chinese · GPT-2 架构 · SFT · GRPO(手写) · Ollama`
 
----
 
-## 📜 License
-
-MIT (code). The Zhuangzi text extracts are from the public-domain classical text; fine-tuned weights are not included.
