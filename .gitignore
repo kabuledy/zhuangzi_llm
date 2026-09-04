@@ -21,3 +21,5 @@ base_tok/
 
 # ---- 环境 ----
 .env
+# ---- 评测结果（本地看，不推送） ----
+eval_results.json

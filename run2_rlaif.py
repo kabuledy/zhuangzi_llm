@@ -233,7 +233,7 @@ HARD_PROMPTS = PROMPTS[16:]
 
 def main():
     optimizer = torch.optim.AdamW(policy.parameters(), lr=5e-6)
-    num_steps = 8
+    num_steps = 100
     G = 6
     questions_per_step = 3
     max_new_tokens = 40
