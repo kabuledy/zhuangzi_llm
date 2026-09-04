@@ -20,7 +20,7 @@ JUDGE_MODEL = "qwen2.5vl:7b"
 def judge_zhuangzi(question, answer):
     """让裁判给回答打分（0-10 整数）。
 
-    判断标准（阿渡定）：
+    判断标准：
       - 不刻意堆砌辞藻（是否真诚朴素、不空洞）
       - 与问题息息相关（是否切题、不答非所问）
 

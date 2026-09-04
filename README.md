@@ -30,8 +30,8 @@ The unusual part: the Transformer is **not** loaded from a framework — it is *
 | Weight loader | `s6_load_weights.py` | Map uer's flat HF keys into the hand-written model |
 | Dataset | `s7_dataset.py` | Completion-only SFT collate (labels only on the answer) |
 | **SFT fine-tune** | `run1_sft.py` | Supervised fine-tuning on Zhuangzi Q&A |
-| **Chat** | `run2_chat.py` | Talk to the trained model |
-| **RLAIF** | `run3_rlaif.py` | Hand-written GRPO policy-gradient refinement |
+| **RLAIF** | `run2_rlaif.py` | Hand-written GRPO policy-gradient refinement |
+| **Chat** | `run3_chat.py` | Talk to the trained model |
 
 ### Data
 
@@ -54,12 +54,12 @@ pip install torch transformers datasets accelerate   # use your CUDA wheel sourc
 python run1_sft.py        # → zhuangzi-sft.pth
 
 # 3. chat
-python run2_chat.py       # talk to your Zhuangzi
+python run3_chat.py       # talk to your Zhuangzi
 
 # 4. (optional) RLAIF with hand-written GRPO
 #    needs a local Ollama judge model:
 #    ollama pull qwen2.5vl:7b
-python run3_rlaif.py      # → zhuangzi-rlaif.pth
+python run2_rlaif.py      # → zhuangzi-rlaif.pth
 ```
 
 > ⚠️ The fine-tuned weights (`.pth`, ~500 MB) are **not** committed (GitHub's 100 MB limit). Run `run1_sft.py` to regenerate them — the code and data are complete.
@@ -99,8 +99,8 @@ This project was built to **understand deep learning from first principles**, no
 | 权重加载器 | `s6_load_weights.py` | 把 uer 的扁平 HF 键名灌进手写模型 |
 | 数据加载 | `s7_dataset.py` | 只对答案段算 loss 的 SFT collate |
 | **SFT 微调** | `run1_sft.py` | 在庄子问答上做监督微调 |
-| **对话** | `run2_chat.py` | 跟训好的模型聊天 |
-| **RLAIF** | `run3_rlaif.py` | 手写 GRPO 策略梯度精修 |
+| **RLAIF** | `run2_rlaif.py` | 手写 GRPO 策略梯度精修 |
+| **对话** | `run3_chat.py` | 跟训好的模型聊天 |
 
 ### 数据
 
@@ -123,12 +123,12 @@ pip install torch transformers datasets accelerate   # 按你的 CUDA 换源
 python run1_sft.py        # → zhuangzi-sft.pth
 
 # 3. 对话
-python run2_chat.py       # 跟你的庄子聊两句
+python run3_chat.py       # 跟你的庄子聊两句
 
 # 4.（可选）RLAIF 手写 GRPO
 #    需要本地 Ollama 当裁判：
 #    ollama pull qwen2.5vl:7b
-python run3_rlaif.py      # → zhuangzi-rlaif.pth
+python run2_rlaif.py      # → zhuangzi-rlaif.pth
 ```
 
 > ⚠️ 微调权重（.pth，约 500MB）**未提交**（GitHub 单文件 100MB 上限）。代码和数据是完整的，跑 `run1_sft.py` 即可重新生成。
