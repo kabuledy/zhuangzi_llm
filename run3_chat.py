@@ -47,8 +47,12 @@ def _clean_response(text):
         text = text.replace(junk, "")
     return text.strip()
 
-def ask_zhuangzi(question, max_new_tokens=120, temperature=0.8):
-    """问庄子一个问题，返回它的回答。"""
+def ask_zhuangzi(question, max_new_tokens=120, temperature=0.7, repetition_penalty=1.2):
+    """问庄子一个问题，返回它的回答。
+
+    repetition_penalty：防复读刹车。对已经生成过的 token 的分数打折，
+    值 >1 时重复的词被压低，模型不易陷进同一句复读（如反复甩「天之苍苍」）。
+    """
     input_text = format_question(question)
     prompt_len = len(tokenizer.encode(input_text, add_special_tokens=False))
 
@@ -61,6 +65,15 @@ def ask_zhuangzi(question, max_new_tokens=120, temperature=0.8):
 
             idx_cond = token_ids[:, -model_config["context_length"]:]
             logits = model(idx_cond)[:, -1, :] / temperature
+
+            # ---- 防复读刹车：对已出现过的 token 打压 ----
+            if repetition_penalty != 1.0:
+                # 找出回答部分已生成的 token
+                gen_tokens = token_ids[0, prompt_len:]
+                if gen_tokens.numel() > 0:
+                    # 对每个已出现 token 的 logit 打折：
+                    #   logit>0 的往下压，logit<0 的往上抬（标准 repetition penalty 公式）
+                    logits[:, gen_tokens] /= repetition_penalty
 
             probs = torch.softmax(logits, dim=-1)
             sorted_probs, sorted_indices = torch.sort(probs, descending=True)
