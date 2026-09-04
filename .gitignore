@@ -1,0 +1,23 @@
+# ---- 私人文档（不上传） ----
+待学习清单.md
+作者提示.md
+
+# ---- 原文提取（含版权文本，不上传） ----
+raw_extract/
+
+# ---- 临时/缓存 ----
+temp/
+.vscode/
+__pycache__/
+*.pyc
+
+# ---- 模型权重（太大，GitHub 100MB 上限；跑 run1_sft.py 重新生成） ----
+*.pth
+*.safetensors
+
+# ---- uer 底座（390M，可从 HuggingFace 重新下载） ----
+base_model/
+base_tok/
+
+# ---- 环境 ----
+.env
