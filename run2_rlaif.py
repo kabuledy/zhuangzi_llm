@@ -1,24 +1,3 @@
-# ==========================================================
-# 【run8】RLAIF —— 让庄子模型「走火入魔」的强化学习精修
-#
-# 手写 GRPO 版（不用 trl，因为权重是手写 GPTModel 格式）。
-#
-# 五件套：
-#   策略模型 policy = zhuangzi-sft.pth（被训练）
-#   参考模型 ref    = zhuangzi-sft.pth 的冻结拷贝（KL 刹车）
-#   提示词 prompts  = SFT 没见过的 30 条新问题
-#   裁判 judge      = 本机 Ollama qwen2.5vl（判「像不像庄子」0-10）
-#   循环            = 采样→打分→组内优势→策略梯度+KL
-#
-# 关键实现点（这次修对的核心）：
-#   ① 采样时只在 no_grad 下生成回答、记录 token 序列，不记 logprob；
-#   ② 训练时【重新前向】算出带梯度的 logprob —— 否则梯度断掉、学不动
-#      （旧版的 bug：.item() 把 logprob 变成 float，梯度恒为 0）；
-#   ③ KL 刹车基于【真实采样的回答序列】在 policy vs ref 下的差异，
-#      而不是旧版那种只算一句话最后一个 token 的近似。
-#
-# 依赖: torch + transformers + 本机 ollama 在跑。环境 D:\\envs\\zhuangzi
-# ==========================================================
 
 import json
 import os
